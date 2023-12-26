@@ -22,7 +22,7 @@ var dnsDomains = map[string]string{
 
 
 func main() {
-	// setup UDP server
+    // setup UDP server
     p := make([]byte, 2048)
     addr := net.UDPAddr{
         Port: 1234,
@@ -35,7 +35,7 @@ func main() {
         return
     }
 
-	// listening to client
+    // listening to client
     for {
         _, remoteaddr, err := ser.ReadFromUDP(p)
 
@@ -46,17 +46,17 @@ func main() {
             continue
         }
 
-		// find ip from domain requested client
-		domain := string(p)
-		ip := ""
-		for k, v := range dnsDomains {
-			if strings.Contains(domain, k) {
-				ip = v
-				break
-			}
+	// find ip from domain requested client
+	domain := string(p)
+	ip := ""
+	for k, v := range dnsDomains {
+		if strings.Contains(domain, k) {
+			ip = v
+			break
 		}
+	}
 
-		// return ip
+	// return ip
         go sendResponse(ser, remoteaddr, ip)
     }
 }
